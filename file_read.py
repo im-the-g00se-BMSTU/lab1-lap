@@ -15,13 +15,10 @@ def readHeaders(reader):
 
 def readRows(reader, headers):
     rows = []
-    regionId = headers.index("region")
     for row in reader:
-        if len(row) != len(headers):
-            continue
         row = [cell.strip() for cell in row]
-        if not row[regionId]:
-            raise ValueError(f"Строка {reader.line_num}: не указан регион.")
+        if "" in row or len(row) != len(headers):
+            continue
         rows.append(row)
     if not rows:
         raise ValueError("В файле нет строк с данными.")
