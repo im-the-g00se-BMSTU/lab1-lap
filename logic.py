@@ -4,7 +4,7 @@ def getRegions(rows, regionId):
         region = row[regionId]
         if region not in regions:
             regions.append(region)
-    return regions
+    return sorted(regions)
 
 
 def selectRegion(rows, regionId, region):
@@ -21,6 +21,8 @@ def getNumbers(rows, columnId):
     numbers = []
     for index in range(len(rows)):
         cell = rows[index][columnId]
+        if not cell:
+            continue
         try:
             number = float(cell)
         except ValueError:

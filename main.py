@@ -19,7 +19,6 @@ def main():
 
     regionId = headers.index("region")
     regions = getRegions(rows, regionId)
-    regions.sort()
     showRegions(regions)
     regionNumber = askNumber("Номер региона: ", len(regions))
     region = regions[regionNumber - 1]

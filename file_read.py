@@ -17,7 +17,7 @@ def readRows(reader, headers):
     rows = []
     for row in reader:
         row = [cell.strip() for cell in row]
-        if "" in row or len(row) != len(headers):
+        if len(row) != len(headers):
             continue
         rows.append(row)
     if not rows:
