@@ -30,7 +30,7 @@ def main():
     columnIds = []
     columns = []
     for index in range(len(headers)):
-        if index != regionId:
+        if index != regionId and headers[index] != "year":
             columnIds.append(index)
             columns.append(headers[index])
     if not columnIds:
