@@ -1,21 +1,16 @@
-"""Выбор данных и расчёты без чтения файлов и вывода на экран."""
-
-
 def get_regions(rows, region_id):
     regions = []
-    names = []
     for row in rows:
         region = row[region_id]
-        if region.lower() not in names:
+        if region not in regions:
             regions.append(region)
-            names.append(region.lower())
     return regions
 
 
 def select_region(rows, region_id, region):
     selected = []
     for row in rows:
-        if row[region_id].lower() == region.lower():
+        if row[region_id] == region:
             selected.append(row)
     if not selected:
         raise ValueError("Регион не найден. Проверьте название.")
@@ -41,7 +36,6 @@ def get_numbers(rows, column_id):
 
 
 def percentile(numbers, percent):
-    # numbers — уже отсортированный непустой список.
     position = (len(numbers) - 1) * percent / 100
     left = int(position)
     if left == len(numbers) - 1:

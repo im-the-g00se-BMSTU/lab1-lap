@@ -1,5 +1,3 @@
-"""Чтение CSV-файла и вывод таблиц."""
-
 import csv
 
 def read_headers(reader):

@@ -1,18 +1,3 @@
-import csv
-
-from file_read import read_data
-
-from logic import calculate_statistics, get_numbers, get_regions, select_region
-
-def ask_file():
-    while True:
-        path = input("Путь к CSV-файлу (UTF-8, разделитель — запятая): ").strip()
-        try:
-            return read_data(path)
-        except (OSError, UnicodeError, csv.Error, ValueError) as error:
-            print(f"Не удалось прочитать файл: {error}")
-
-
 def ask_number(prompt, count):
     while True:
         try:
@@ -26,35 +11,16 @@ def ask_number(prompt, count):
         return number
 
 
-def ask_region(rows, region_id):
-    regions = get_regions(rows, region_id)
+def show_regions(regions):
     print("\nРегионы:")
     for index in range(len(regions)):
         print(f"{index + 1}: {regions[index]}")
 
-    region_number = ask_number("Номер региона: ", len(regions))
-    return select_region(rows, region_id, regions[region_number - 1])
 
-
-def show_columns(headers, region_id):
+def show_columns(columns):
     print("\nКолонки:")
-    column_ids = []
-    for index in range(len(headers)):
-        if index != region_id:
-            column_ids.append(index)
-            print(f"{len(column_ids)}: {headers[index]}")
-    return column_ids
-
-
-def ask_statistics(rows, column_ids):
-    while True:
-        column_number = ask_number("ID числовой колонки: ", len(column_ids))
-        column_id = column_ids[column_number - 1]
-        try:
-            numbers = get_numbers(rows, column_id)
-            return column_id, calculate_statistics(numbers)
-        except ValueError as error:
-            print(f"Ошибка выбора или данных: {error}")
+    for index in range(len(columns)):
+        print(f"{index + 1}: {columns[index]}")
 
 
 def show_statistics(column_name, statistics):
@@ -69,6 +35,7 @@ def show_statistics(column_name, statistics):
         percentile_rows.append([str(percent), f"{value:.6g}"])
     print("\nПерцентили (линейная интерполяция):")
     print_table(["Перцентиль", "Значение"], percentile_rows)
+
 
 def print_table(headers, rows):
     widths = []
