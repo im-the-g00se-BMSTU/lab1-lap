@@ -17,12 +17,8 @@ def readRows(reader, headers):
     rows = []
     regionId = headers.index("region")
     for row in reader:
-        if not row:
-            continue
         if len(row) != len(headers):
-            raise ValueError(
-                f"Строка {reader.line_num}: неверное количество колонок."
-            )
+            continue
         row = [cell.strip() for cell in row]
         if not row[regionId]:
             raise ValueError(f"Строка {reader.line_num}: не указан регион.")
