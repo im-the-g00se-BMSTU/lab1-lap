@@ -2,6 +2,26 @@
 
 import csv
 
+def print_table(headers, rows):
+    widths = []
+    for column in range(len(headers)):
+        width = len(headers[column])
+        for row in rows:
+            width = max(width, len(str(row[column])))
+        widths.append(width)
+
+    separator = "+"
+    for width in widths:
+        separator += "-" * (width + 2) + "+"
+    print(separator)
+    for row in [headers] + rows:
+        line = "|"
+        for column in range(len(headers)):
+            line += " " + str(row[column]).ljust(widths[column]) + " |"
+        print(line)
+        if row is headers:
+            print(separator)
+    print(separator)
 
 def read_data(path):
     rows = []

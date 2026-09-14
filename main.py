@@ -2,30 +2,8 @@
 
 import csv
 
-from file_io import read_data
+from file_io import read_data, print_table
 from logic import calculate_statistics, get_numbers, get_regions, select_region
-
-
-def print_table(headers, rows):
-    widths = []
-    for column in range(len(headers)):
-        width = len(headers[column])
-        for row in rows:
-            width = max(width, len(str(row[column])))
-        widths.append(width)
-
-    separator = "+"
-    for width in widths:
-        separator += "-" * (width + 2) + "+"
-    print(separator)
-    for row in [headers] + rows:
-        line = "|"
-        for column in range(len(headers)):
-            line += " " + str(row[column]).ljust(widths[column]) + " |"
-        print(line)
-        if row is headers:
-            print(separator)
-    print(separator)
 
 
 def main():
@@ -59,22 +37,27 @@ def main():
     print("\nДанные выбранного региона:")
     print_table(headers, selected)
     print("\nКолонки:")
+    column_ids = []
     for index in range(len(headers)):
-        print(f"{index + 1}: {headers[index]}")
+        if index != region_id:
+            column_ids.append(index)
+            print(f"{len(column_ids)}: {headers[index]}")
+
+    if not column_ids:
+        print("В файле нет колонок для расчёта статистики.")
+        return
 
     while True:
         try:
-            column_id = int(input("ID числовой колонки: ")) - 1
+            column_number = int(input("ID числовой колонки: "))
         except ValueError:
             print("ID колонки должен быть целым числом.")
             continue
         try:
-            if column_id < 0 or column_id >= len(headers):
-                print(f"Введите целый ID от 1 до {len(headers)}.")
+            if column_number < 1 or column_number > len(column_ids):
+                print(f"Введите целый ID от 1 до {len(column_ids)}.")
                 continue
-            if headers[column_id] == "region":
-                print("Выберите числовую колонку, а не название региона.")
-                continue
+            column_id = column_ids[column_number - 1]
             numbers = get_numbers(selected, column_id)
             minimum, maximum, median, average, percentiles = calculate_statistics(
                 numbers
