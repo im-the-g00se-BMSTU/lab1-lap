@@ -26,7 +26,7 @@ def getNumbers(rows, columnId):
         except ValueError:
             raise ValueError(
                 f"Строка региона {index + 1}: значение '{cell}' не является числом."
-            ) from None
+            )
         if number != number or number == float("inf") or number == -float("inf"):
             raise ValueError(
                 f"Строка региона {index + 1}: число должно быть конечным."
