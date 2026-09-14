@@ -6,8 +6,11 @@ from logic import calculate_statistics, get_numbers, get_regions, select_region
 
 
 def main():
+    default_path = "sample_csv/russian_demography.csv"
     while True:
-        path = input("Путь к CSV-файлу: ").strip()
+        path = input(f"Путь к CSV-файлу (Enter — {default_path}): ").strip()
+        if not path:
+            path = default_path
         try:
             headers, rows = read_data(path)
             break
