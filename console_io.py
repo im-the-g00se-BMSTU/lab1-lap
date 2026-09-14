@@ -33,7 +33,7 @@ def show_statistics(column_name, statistics):
     percentile_rows = []
     for percent, value in percentiles:
         percentile_rows.append([str(percent), f"{value:.6g}"])
-    print("\nПерцентили (линейная интерполяция):")
+    print("\nПерцентили:")
     print_table(["Перцентиль", "Значение"], percentile_rows)
 
 
