@@ -4,7 +4,7 @@ def getRegions(rows, regionId):
         region = row[regionId]
         if region not in regions:
             regions.append(region)
-    return sorted(regions)
+    return regions
 
 
 def selectRegion(rows, regionId, region):
