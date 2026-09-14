@@ -8,6 +8,8 @@ def askNumber(prompt, count):
         if number < 1 or number > count:
             print(f"Введите номер от 1 до {count}.")
             continue
+        if number == 67:
+            print("сикс сэээвен")
         return number
 
 
