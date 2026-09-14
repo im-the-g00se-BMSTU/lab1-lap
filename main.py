@@ -1,54 +1,54 @@
 import csv
 
-from console_io import ask_number, print_table, show_columns, show_regions, show_statistics
-from file_read import read_data
-from logic import calculate_statistics, get_numbers, get_regions, select_region
+from console_io import askNumber, printTable, showColumns, showRegions, showStatistics
+from file_read import readData
+from logic import calculateStatistics, getNumbers, getRegions, selectRegion
 
 
 def main():
-    default_path = "sample_csv/russian_demography.csv"
+    defaultPath = "sample_csv/russian_demography.csv"
     while True:
-        path = input(f"Путь к CSV-файлу (Enter — {default_path}): ").strip()
+        path = input(f"Путь к CSV-файлу (Enter — {defaultPath}): ").strip()
         if not path:
-            path = default_path
+            path = defaultPath
         try:
-            headers, rows = read_data(path)
+            headers, rows = readData(path)
             break
         except (OSError, UnicodeError, csv.Error, ValueError) as error:
             print(f"Не удалось прочитать файл: {error}")
 
-    region_id = headers.index("region")
-    regions = get_regions(rows, region_id)
-    show_regions(regions)
-    region_number = ask_number("Номер региона: ", len(regions))
-    region = regions[region_number - 1]
-    selected = select_region(rows, region_id, region)
+    regionId = headers.index("region")
+    regions = getRegions(rows, regionId)
+    showRegions(regions)
+    regionNumber = askNumber("Номер региона: ", len(regions))
+    region = regions[regionNumber - 1]
+    selected = selectRegion(rows, regionId, region)
 
     print("\nДанные выбранного региона:")
-    print_table(headers, selected)
+    printTable(headers, selected)
 
-    column_ids = []
+    columnIds = []
     columns = []
     for index in range(len(headers)):
-        if index != region_id:
-            column_ids.append(index)
+        if index != regionId:
+            columnIds.append(index)
             columns.append(headers[index])
-    if not column_ids:
+    if not columnIds:
         print("В файле нет колонок для расчёта статистики.")
         return
-    show_columns(columns)
+    showColumns(columns)
 
     while True:
-        column_number = ask_number("ID числовой колонки: ", len(column_ids))
-        column_id = column_ids[column_number - 1]
+        columnNumber = askNumber("ID числовой колонки: ", len(columnIds))
+        columnId = columnIds[columnNumber - 1]
         try:
-            numbers = get_numbers(selected, column_id)
-            statistics = calculate_statistics(numbers)
+            numbers = getNumbers(selected, columnId)
+            statistics = calculateStatistics(numbers)
             break
         except ValueError as error:
             print(f"Ошибка выбора или данных: {error}")
 
-    show_statistics(headers[column_id], statistics)
+    showStatistics(headers[columnId], statistics)
 
 
 if __name__ == "__main__":

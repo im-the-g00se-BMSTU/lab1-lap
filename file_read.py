@@ -1,6 +1,6 @@
 import csv
 
-def read_headers(reader):
+def readHeaders(reader):
     headers = next(reader, None)
     if not headers:
         raise ValueError("Файл пуст или первая строка не содержит заголовков.")
@@ -13,9 +13,9 @@ def read_headers(reader):
     return headers
 
 
-def read_rows(reader, headers):
+def readRows(reader, headers):
     rows = []
-    region_id = headers.index("region")
+    regionId = headers.index("region")
     for row in reader:
         if not row:
             continue
@@ -24,7 +24,7 @@ def read_rows(reader, headers):
                 f"Строка {reader.line_num}: неверное количество колонок."
             )
         row = [cell.strip() for cell in row]
-        if not row[region_id]:
+        if not row[regionId]:
             raise ValueError(f"Строка {reader.line_num}: не указан регион.")
         rows.append(row)
     if not rows:
@@ -32,9 +32,9 @@ def read_rows(reader, headers):
     return rows
 
 
-def read_data(path):
+def readData(path):
     with open(path, encoding="utf-8-sig", newline="") as file:
         reader = csv.reader(file, strict=True)
-        headers = read_headers(reader)
-        rows = read_rows(reader, headers)
+        headers = readHeaders(reader)
+        rows = readRows(reader, headers)
     return headers, rows

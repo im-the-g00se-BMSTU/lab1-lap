@@ -1,26 +1,26 @@
-def get_regions(rows, region_id):
+def getRegions(rows, regionId):
     regions = []
     for row in rows:
-        region = row[region_id]
+        region = row[regionId]
         if region not in regions:
             regions.append(region)
     return regions
 
 
-def select_region(rows, region_id, region):
+def selectRegion(rows, regionId, region):
     selected = []
     for row in rows:
-        if row[region_id] == region:
+        if row[regionId] == region:
             selected.append(row)
     if not selected:
         raise ValueError("Регион не найден. Проверьте название.")
     return selected
 
 
-def get_numbers(rows, column_id):
+def getNumbers(rows, columnId):
     numbers = []
     for index in range(len(rows)):
-        cell = rows[index][column_id]
+        cell = rows[index][columnId]
         try:
             number = float(cell)
         except ValueError:
@@ -44,7 +44,7 @@ def percentile(numbers, percent):
     return numbers[left] * (1 - fraction) + numbers[left + 1] * fraction
 
 
-def calculate_statistics(numbers):
+def calculateStatistics(numbers):
     if not numbers:
         raise ValueError("Нет чисел для расчёта.")
     numbers = sorted(numbers)
